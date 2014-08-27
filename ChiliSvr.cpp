@@ -51,15 +51,15 @@ char* getIp(){
         }
     }
     if (ifAddrStruct!=NULL) freeifaddrs(ifAddrStruct);
-    return "[ERROR] getIp(): SOMETHING WRONG";
+    return NULL;
 }
 
 char* svrIP = (char *)malloc(INET_ADDRSTRLEN);
 
-char* initSock = "5556";     //REP port
-char* updateSock = "5557";	//PULL port
-char* pubSock = "5558";		//PUB port
-char* storeSock = "5559";	//PULL port
+char initSock[] = "5556";     //REP port
+char updateSock[] = "5557";	//PULL port
+char pubSock[] = "5558";		//PUB port
+char storeSock[] = "5559";	//PULL port
 
 
 void* publisher;
