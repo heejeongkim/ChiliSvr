@@ -2,7 +2,7 @@
  * ChiliSvr.cpp
  *
  *  Created on: Aug 19, 2014
- *      Author: chili
+ *      Author: Hee Jeong Kim
  */
 
 #include <czmq.h>
@@ -10,6 +10,7 @@
 #include <stdio.h>
 using namespace std;
 
+//To receive message with any length from clients
 char *  s_recv (void *socket) {
     zmq_msg_t msg;
     zmq_msg_init(&msg);
@@ -24,6 +25,7 @@ char *  s_recv (void *socket) {
     return (str);
 }
 
+//To get an Ip address of your computer
 char* getIp(){
     struct ifaddrs *ifAddrStruct=NULL;
     struct ifaddrs *ifa=NULL;
@@ -67,10 +69,11 @@ void* initializer;
 void* propagater;
 void* stateSaver;
 
+//To handle 'getInit' requests from clients
 void initialization(char* fileName, char* defaultState) {
 	FILE* f= fopen(fileName, "r");
 
-	//When there's no file (no existing state), generates new file to store state
+	//When there's no file (no existing state), generates new file to store state.
 	if(f == NULL){
 		FILE* pFile = fopen(fileName, "w");
 		if (pFile != NULL) {
@@ -79,7 +82,7 @@ void initialization(char* fileName, char* defaultState) {
 		}
 		zmq_send(initializer, defaultState, strlen(defaultState), 0);
 	}
-	//If there is an existing state (state of other clients), return it
+	//If there is an existing state (state of other clients), return it.
 	else{
 		fseek(f, 0, SEEK_END);
 		int len = ftell(f);
@@ -99,6 +102,7 @@ void initialization(char* fileName, char* defaultState) {
 	}
 }
 
+//To write a file
 void writeFile(char* fileName, char* contents, bool isLogFile) {
 	if(isLogFile){
 		FILE* pFile = fopen(fileName, "a"); //append contents
@@ -168,7 +172,7 @@ int main() {
 			//char defaultState[strlen(newStateMsg)];
 			sscanf(newStateMsg, "%s %s", topic, defaultState);
 			writeFile(topic, defaultState, false);
-			//printf("[Received newState]: %s\n", newStateMsg);
+			printf("[Received newState]: %s\n", newStateMsg);
 
 			//2. Publish new state to clients
 			zmq_send(publisher, newStateMsg, strlen(newStateMsg), 0);
