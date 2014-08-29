@@ -1,0 +1,15 @@
+ChiliSvr
+===========
+This is the server part of Chilinet.
+
+You can find detailed information about ChiliSvr here.
+www.slideshare.net/hjkim0/chilinet
+
+Prerequisite
+=============
+To run a Chilisvr, ZMQ 4.0.4 and CZMQ should be installed on your computer.
+
+Download links
+===============
+ZMQ: http://zeromq.org/intrp:get-the-software
+CZMQ: http://czmq.zeromq.org/page:get-the-software
